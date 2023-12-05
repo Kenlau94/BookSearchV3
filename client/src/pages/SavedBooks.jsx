@@ -1,5 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-unknown-property */
+
+// import { useState, useEffect } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
+// import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
@@ -31,7 +36,9 @@ const SavedBooks = () => {
     }
 
     try {
-      await deleteBook({ variables: { bookId } });
+      await deleteBook({
+        variables: { bookId },
+      });
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -41,7 +48,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
@@ -63,8 +70,8 @@ const SavedBooks = () => {
         <Row>
           {userData.savedBooks.map((book) => {
             return (
-              <Col md="4">
-                <Card key={book.bookId} border="dark">
+              <Col key={book.bookId} md="4">
+                <Card border="dark">
                   {book.image ? (
                     <Card.Img
                       src={book.image}
